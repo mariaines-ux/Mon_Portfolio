@@ -603,3 +603,32 @@ footer {
     scroll-behavior: auto;
   }
 }
+
+
+/* ------------------------------------------------------------
+   15. APPARITION AU DÉFILEMENT (scroll reveal)
+   Ces deux classes sont ajoutées/retirées par index.js à l'aide
+   d'un IntersectionObserver : "reveal" pose l'état de départ
+   (invisible, légèrement décalé), "is-visible" est ajoutée
+   par le script dès que l'élément entre dans l'écran.
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Si le visiteur a demandé "réduire les animations" dans son système,
+   le contenu s'affiche directement, sans effet de fondu ni de décalage. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

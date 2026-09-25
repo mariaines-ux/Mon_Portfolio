@@ -1,9 +1,6 @@
 /* ============================================================
    PORTFOLIO — Maria-Inès Ayélé Gaba
-   Script :
-     1. Thème clair/sombre
-     2. Langue FR/EN
-     3. Apparition des éléments au défilement (scroll reveal)
+   Script : bouton thème clair/sombre + bouton langue FR/EN
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -64,7 +61,7 @@ const translations = {
     'apropos.f1t': 'Je suis',
     'apropos.f1d': 'Passionnée par le numériques, les sciences, la cybersécurité et la technologie. Je conçois des sites web et pose les bases de leur sécurité.',
     'apropos.f2t': 'Je cherche',
-    'apropos.f2d': "Des opportunités d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.",
+    'apropos.f2d': "Des opportunitées d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.",
 
     'comp.titre': 'Mes compétences',
     'comp.s1t': 'Programmation',
@@ -202,38 +199,12 @@ function applyLanguage(lang) {
 
 /* ------------------------------------------------------------
    3. APPARITION AU DÉFILEMENT (scroll reveal)
-   Principe : on observe certains éléments de la page grâce à
-   IntersectionObserver, une API du navigateur qui détecte quand
-   un élément entre dans la zone visible de l'écran. Dès que
-   c'est le cas, on lui ajoute la classe "is-visible", qui
-   déclenche l'animation d'apparition définie en CSS ci-dessous.
+   Principe : IntersectionObserver est une API du navigateur qui
+   surveille des éléments et déclenche une fonction dès que l'un
+   d'eux entre dans la zone visible de l'écran, pendant le
+   défilement. On lui ajoute alors la classe "is-visible", qui
+   déclenche l'animation définie dans index.css (section 15).
    ------------------------------------------------------------ */
-
-// On injecte le CSS nécessaire directement ici, pour ne pas avoir
-// à modifier mon_portfolio.css. Tu peux bien sûr déplacer ces
-// règles dans ton fichier CSS si tu préfères tout centraliser.
-const revealStyle = document.createElement('style');
-revealStyle.textContent = `
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* Si la personne a activé "réduire les animations" dans son système,
-     on affiche directement le contenu, sans effet. */
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-`;
-document.head.appendChild(revealStyle);
 
 // Éléments à faire apparaître progressivement : le titre de chaque
 // section, et à l'intérieur, les cartes (compétences, projets, étapes
