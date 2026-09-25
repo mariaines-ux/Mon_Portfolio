@@ -1,0 +1,605 @@
+/* ============================================================
+   PORTFOLIO — Maria-Inès Gaba
+   Feuille de style (CSS)
+   Organisation du fichier :
+     1. Polices
+     2. Variables de couleurs et de typographie (thème clair/sombre)
+     3. Réinitialisation de base
+     4. Mise en page générale (conteneur, navigation)
+     5. Section "Héros" (haut de page)
+     6. Titres de section (communs à toutes les sections)
+     7. Section "À propos"
+     8. Section "Compétences"
+     9. Section "Projets"
+     10. Section "Parcours"
+     11. Section "Contact"
+     12. Pied de page
+     13. Adaptation mobile (responsive)
+     14. Accessibilité (réduction des animations)
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. POLICES
+   - Bricolage Grotesque : titres (style affiché, gras)
+   - Instrument Sans     : texte courant
+   - JetBrains Mono      : bloc de code et étiquettes techniques
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+
+/* ------------------------------------------------------------
+   2. VARIABLES (thème clair par défaut)
+   Toutes les couleurs du site passent par ces variables :
+   il suffit de les modifier ici pour changer tout le design.
+   ------------------------------------------------------------ */
+:root {
+  /* Couleurs - thème clair */
+  --bg: #F2F1FA;           /* fond de page */
+  --surface: #FFFFFF;      /* fond des cartes (compétences, projets...) */
+  --ink: #1B1340;          /* couleur du texte principal */
+  --muted: #5D5885;        /* texte secondaire (descriptions, légendes) */
+  --line: #DAD6EF;         /* bordures et séparateurs */
+  --accent: #5B3DF5;       /* couleur d'accent (violet) : titres, boutons */
+  --accent-ink: #FFFFFF;   /* couleur du texte sur fond accent */
+  --mint: #12A87A;         /* couleur secondaire (vert) : statut "terminé" */
+  --code-bg: #1B1340;      /* fond du bloc de code dans le héros */
+  --code-ink: #E9E6FF;     /* texte du bloc de code */
+  --code-key: #8FE3C5;     /* couleur des "clés" dans le faux code Python */
+  --code-str: #FFC98B;     /* couleur des chaînes de caractères dans le code */
+
+  /* Polices */
+  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  /* Espace réservé aux barres système sur mobile (encoche, barre du bas) */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Thème sombre automatique : s'active si le système du visiteur
+   est en mode sombre ET que la page n'a pas été forcée en clair. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #110D2B;
+    --surface: #1C1740;
+    --ink: #EFEDFF;
+    --muted: #A9A4D3;
+    --line: #332C66;
+    --accent: #8F7BFF;
+    --accent-ink: #110D2B;
+    --mint: #5CE0B3;
+    --code-bg: #0A0720;
+  }
+}
+
+/* Thème sombre forcé manuellement, ex : <html data-theme="dark"> */
+:root[data-theme="dark"] {
+  --bg: #110D2B;
+  --surface: #1C1740;
+  --ink: #EFEDFF;
+  --muted: #A9A4D3;
+  --line: #332C66;
+  --accent: #8F7BFF;
+  --accent-ink: #110D2B;
+  --mint: #5CE0B3;
+  --code-bg: #0A0720;
+}
+
+
+/* ------------------------------------------------------------
+   3. RÉINITIALISATION DE BASE
+   ------------------------------------------------------------ */
+* {
+  box-sizing: border-box; /* les paddings/bordures ne débordent pas des tailles fixées */
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px); /* évite qu'un titre soit caché sous une barre fixe */
+  scroll-behavior: smooth; /* défilement doux quand on clique sur un lien du menu */
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit; /* les liens reprennent la couleur du texte autour, pas le bleu par défaut */
+}
+
+/* Contour visible au clavier (accessibilité), sans bordure moche à la souris */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   4. MISE EN PAGE GÉNÉRALE
+   ------------------------------------------------------------ */
+
+/* Conteneur central : limite la largeur du contenu et le centre */
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Barre de navigation en haut de page */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+  gap: 16px;
+  flex-wrap: wrap; /* passe à la ligne sur petit écran plutôt que de déborder */
+}
+
+nav .logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+nav ul {
+  display: flex;
+  gap: 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+nav ul a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 15px;
+}
+
+nav ul a:hover {
+  color: var(--ink);
+}
+
+/* Groupe des deux boutons de préférence (thème + langue) */
+.prefs {
+  display: flex;
+  gap: 10px;
+}
+
+.prefs button {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.prefs button:hover {
+  border-color: var(--accent);
+}
+
+/* Le bouton thème est carré (juste une icône) */
+#theme-toggle {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+
+/* ------------------------------------------------------------
+   5. SECTION "HÉROS" (bandeau d'introduction en haut de page)
+   ------------------------------------------------------------ */
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr; /* texte à gauche, bloc de code à droite */
+  gap: 48px;
+  align-items: center;
+  padding: 56px 0 88px;
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(46px, 8vw, 92px); /* taille fluide entre 46px et 92px selon l'écran */
+  line-height: .95;
+  letter-spacing: -.03em;
+  margin: 0 0 24px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--accent); /* le prénom/nom mis en valeur passe à la ligne et en couleur */
+}
+
+.hero p.lead {
+  font-size: 20px;
+  color: var(--muted);
+  max-width: 32ch; /* limite la largeur du paragraphe pour rester lisible */
+  margin: 0 0 32px;
+}
+
+/* Boutons d'appel à l'action ("Voir mes projets", "Me contacter") */
+.btns {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 22px;
+  border-radius: 999px; /* forme "pilule" */
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 16px;
+  border: 2px solid var(--accent);
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn.ghost {
+  color: var(--ink);
+  border-color: var(--line); /* bouton secondaire, contour discret */
+}
+
+.btn:hover {
+  border-color: var(--ink);
+}
+
+/* Bloc imitant une fenêtre de code (façon terminal) */
+.code {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border-radius: 18px;
+  padding: 20px 22px;
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.75;
+  overflow-x: auto; /* défilement horizontal si une ligne est trop longue */
+  box-shadow: 12px 12px 0 var(--accent); /* ombre "décalée" façon carte à jouer */
+}
+
+.code .dots {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 14px; /* les 3 petits ronds façon barre de fenêtre macOS */
+}
+
+.code .dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #5B5590;
+  display: block;
+}
+
+/* Coloration syntaxique simplifiée du faux code Python */
+.code .k { color: var(--code-key); } /* clés */
+.code .s { color: var(--code-str); } /* chaînes de caractères */
+.code .c { color: #8C86C2; }         /* commentaires */
+
+/* Curseur clignotant à la fin du bloc de code */
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--code-key);
+  vertical-align: -2px;
+  animation: blink 1.1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+
+/* ------------------------------------------------------------
+   6. TITRES DE SECTION (communs à toutes les sections)
+   ------------------------------------------------------------ */
+section {
+  padding: 64px 0;
+  border-top: 1px solid var(--line); /* sépare visuellement chaque section */
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 4.5vw, 44px);
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  margin: 0 0 32px;
+}
+
+
+/* ------------------------------------------------------------
+   7. SECTION "À PROPOS"
+   ------------------------------------------------------------ */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* texte à gauche, fiche d'infos à droite */
+  gap: 40px;
+}
+
+.about p {
+  margin: 0 0 16px;
+  max-width: 60ch;
+}
+
+/* Petite liste de faits clés (formation, établissement...) */
+.facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.facts li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+}
+
+.facts b {
+  display: block;
+  font-family: var(--display);
+  font-size: 18px;
+}
+
+.facts span {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+
+/* ------------------------------------------------------------
+   8. SECTION "COMPÉTENCES"
+   ------------------------------------------------------------ */
+
+/* Grille de cartes qui s'adapte au nombre de colonnes possible */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.skill h3 {
+  font-family: var(--display);
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+
+.skill p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* Étiquettes de compétences (Python, HTML, Git...) */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags span {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 4px 11px;
+  border-radius: 8px;
+}
+
+/* Étiquette pour une compétence "en cours d'apprentissage" : bordure en pointillés */
+.tags span.learn {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.legend {
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+
+/* ------------------------------------------------------------
+   9. SECTION "PROJETS"
+   ------------------------------------------------------------ */
+.projects {
+  display: grid;
+  gap: 20px;
+}
+
+.project {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* titre/statut à gauche, description à droite */
+  gap: 24px;
+}
+
+/* Petite fantaisie graphique sur la 2e carte de projet (coin arrondi différent) */
+.project:nth-child(2) {
+  border-radius: 20px 20px 20px 60px;
+}
+
+.project h3 {
+  font-family: var(--display);
+  font-size: 24px;
+  line-height: 1.1;
+  margin: 0 0 10px;
+}
+
+.project .status {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--mint);
+  font-weight: 500;
+}
+
+.project p {
+  margin: 0 0 14px;
+}
+
+
+/* ------------------------------------------------------------
+   10. SECTION "PARCOURS" (frise chronologique)
+   ------------------------------------------------------------ */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 22px;
+  border-left: 3px solid var(--accent); /* la ligne verticale de la frise */
+}
+
+.timeline li {
+  position: relative;
+  padding: 0 0 26px 20px;
+}
+
+/* Le petit rond sur la ligne, pour chaque étape */
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 8px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--accent);
+}
+
+/* L'étape la plus récente (la première de la liste) a un rond plein */
+.timeline li:first-child::before {
+  background: var(--accent);
+}
+
+.timeline b {
+  font-family: var(--display);
+  font-size: 20px;
+  display: block;
+}
+
+.timeline span {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+
+/* ------------------------------------------------------------
+   11. SECTION "CONTACT"
+   ------------------------------------------------------------ */
+.contact p {
+  max-width: 52ch;
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: 19px;
+}
+
+/* Grille de liens de contact (email, GitHub, LinkedIn...) */
+.links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.links a {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+  text-decoration: none;
+}
+
+.links a:hover {
+  border-color: var(--accent);
+}
+
+.links small {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.links b {
+  font-family: var(--display);
+  font-size: 18px;
+}
+
+
+/* ------------------------------------------------------------
+   12. PIED DE PAGE
+   ------------------------------------------------------------ */
+footer {
+  padding: 32px 0 48px;
+  color: var(--muted);
+  font-size: 14px;
+  border-top: 1px solid var(--line);
+}
+
+
+/* ------------------------------------------------------------
+   13. ADAPTATION MOBILE (responsive)
+   En dessous de 800px de large : les grilles passent
+   d'une disposition en colonnes à une disposition empilée.
+   ------------------------------------------------------------ */
+@media (max-width: 800px) {
+  .hero,
+  .about,
+  .project {
+    grid-template-columns: 1fr; /* une seule colonne : tout est empilé verticalement */
+  }
+
+  .hero {
+    padding-top: 24px;
+  }
+
+  .code {
+    box-shadow: 8px 8px 0 var(--accent); /* ombre réduite sur petit écran */
+  }
+}
+
+
+/* ------------------------------------------------------------
+   14. ACCESSIBILITÉ
+   Si le visiteur a demandé "réduire les animations"
+   dans les réglages de son système, on désactive
+   le clignotement du curseur et le défilement doux.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
