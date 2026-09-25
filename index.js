@@ -1,6 +1,9 @@
 /* ============================================================
    PORTFOLIO — Maria-Inès Ayélé Gaba
-   Script : bouton thème clair/sombre + bouton langue FR/EN
+   Script :
+     1. Thème clair/sombre
+     2. Langue FR/EN
+     3. Apparition des éléments au défilement (scroll reveal)
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -61,7 +64,7 @@ const translations = {
     'apropos.f1t': 'Je suis',
     'apropos.f1d': 'Passionnée par le numériques, les sciences, la cybersécurité et la technologie. Je conçois des sites web et pose les bases de leur sécurité.',
     'apropos.f2t': 'Je cherche',
-    'apropos.f2d': "Des opportunitées d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.",
+    'apropos.f2d': "Des opportunités d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.",
 
     'comp.titre': 'Mes compétences',
     'comp.s1t': 'Programmation',
@@ -195,3 +198,82 @@ function applyLanguage(lang) {
   document.documentElement.setAttribute('lang', lang);
   langButton.textContent = lang === 'fr' ? 'FR / EN' : 'EN / FR';
 }
+
+
+/* ------------------------------------------------------------
+   3. APPARITION AU DÉFILEMENT (scroll reveal)
+   Principe : on observe certains éléments de la page grâce à
+   IntersectionObserver, une API du navigateur qui détecte quand
+   un élément entre dans la zone visible de l'écran. Dès que
+   c'est le cas, on lui ajoute la classe "is-visible", qui
+   déclenche l'animation d'apparition définie en CSS ci-dessous.
+   ------------------------------------------------------------ */
+
+// On injecte le CSS nécessaire directement ici, pour ne pas avoir
+// à modifier mon_portfolio.css. Tu peux bien sûr déplacer ces
+// règles dans ton fichier CSS si tu préfères tout centraliser.
+const revealStyle = document.createElement('style');
+revealStyle.textContent = `
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Si la personne a activé "réduire les animations" dans son système,
+     on affiche directement le contenu, sans effet. */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+`;
+document.head.appendChild(revealStyle);
+
+// Éléments à faire apparaître progressivement : le titre de chaque
+// section, et à l'intérieur, les cartes (compétences, projets, étapes
+// du parcours, liens de contact).
+const revealSelectors = [
+  'section > h2',
+  '.about > div',
+  '.facts li',
+  '.skill',
+  '.project',
+  '.timeline li',
+  '.links a',
+];
+
+const revealElements = document.querySelectorAll(revealSelectors.join(', '));
+
+revealElements.forEach((el, index) => {
+  el.classList.add('reveal');
+  // Petit décalage progressif entre éléments voisins (0, 90, 180, 270ms puis
+  // on recommence à 0), pour un effet "cascade" plutôt qu'un bloc figé.
+  el.style.transitionDelay = `${(index % 4) * 90}ms`;
+});
+
+// L'observateur : callback appelé chaque fois qu'un élément observé
+// entre ou sort de la zone définie par "rootMargin".
+const revealObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        // Une fois apparu, on arrête de l'observer : l'animation
+        // ne se rejoue pas si on remonte puis redescend sur l'élément.
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.15,                  // se déclenche dès que 15% de l'élément est visible
+    rootMargin: '0px 0px -60px 0px',  // déclenche un peu avant d'atteindre le bas de l'écran
+  }
+);
+
+revealElements.forEach((el) => revealObserver.observe(el));
