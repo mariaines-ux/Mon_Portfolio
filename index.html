@@ -1,279 +1,158 @@
-/* ============================================================
-   PORTFOLIO — Maria-Inès Ayélé Gaba
-   Script :
-     1. Thème clair/sombre
-     2. Langue FR/EN
-     3. Apparition des éléments au défilement (scroll reveal)
-   ============================================================ */
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maria-Inès Gaba · Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Navigation principale">
+  <a class="logo" href="#top">M-I.  GABA</a>
+  <ul>
+    <li><a href="#apropos" data-i18n="nav.apropos">À propos de moi</a></li>
+    <li><a href="#competences" data-i18n="nav.competences">Mes compétences</a></li>
+    <li><a href="#projets" data-i18n="nav.projets">Mes projets</a></li>
+    <li><a href="#parcours" data-i18n="nav.parcours">Mon parcours</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Me contacter</a></li>
+  </ul>
+  <div class="prefs">
+      <button id="theme-toggle" type="button" aria-label="Changer de thème">
+        <span class="icon" aria-hidden="true">🌙</span>
+      </button>
+      <button id="lang-toggle" type="button" aria-label="Change language">FR / EN</button>
+    </div>
+</nav>
 
-/* ------------------------------------------------------------
-   1. THÈME CLAIR / SOMBRE
-   On pose l'attribut data-theme="light" ou "dark" sur <html>.
-   Le CSS réagit déjà à cet attribut. Le choix est mémorisé
-   dans localStorage pour être retrouvé à la prochaine visite.
-   ------------------------------------------------------------ */
-const themeButton = document.getElementById('theme-toggle');
-const themeIcon = themeButton.querySelector('.icon');
-const html = document.documentElement;
+<header class="hero" id="top">
+  <div>
+    <h1>Maria-Inès Ayélé <span>GABA</span></h1>
+    <p class="lead" data-i18n="hero.lead">Computer Science Student</p>
+    <div class="btns">
+      <a class="btn primary" href="#projets" data-i18n="hero.btn1">Voir mes projets</a>
+      <a class="btn ghost" href="#contact" data-i18n="hero.btn2">Me contacter</a>
+    </div>
+  </div>
+  <div class="code" aria-label="Présentation sous forme de code Python">
+    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+<span class="c"># profil.py</span><br>
+etudiante = {<br>
+&nbsp;&nbsp;<span class="k">"Nom"</span>: <span class="s">"GABA Maria-Inès Ayélé"</span>,<br>
+&nbsp;&nbsp;<span class="k">"Departement"</span>: <span class="s">"Informatique"</span>,<br>
+&nbsp;&nbsp;<span class="k">"Filiere"</span>: <span class="s">"Administration des Systèmes d'Informations"</span>,<br>
+&nbsp;&nbsp;<span class="k">"Profil"</span>: <span class="s">"Computer Science Student"</span>,<br>
+&nbsp;&nbsp;<span class="k">"Objectif"</span>: <span class="s">"Pentester - Architecte Cybersécurité - Cryptologue - RSSI"</span>,<br>
+}<span class="cursor" aria-hidden="true"></span>
+  </div>
+</header>
 
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-  html.setAttribute('data-theme', savedTheme);
-}
-updateThemeIcon();
+<section id="apropos">
+  <h2 data-i18n="apropos.titre">À propos de moi</h2>
+  <div class="about">
+    <div>
+      <p data-i18n="apropos.p1">Durant mon parcours scolaire, en tant que lycéenne, j'ai eu l'opportunité d'apprendre les bases de la programmation en Python. Apprendre cela, m'a fasciné et de là, j'ai entamé des recherches sur l'informatique. Très vite, ce que je pensais n'etre qu'une discipline parmis tant d'autres est devenue une passion que je nourris encore aujourd'hui.</p>
+      <p data-i18n="apropos.p2">Mon objectif est clair. M'améliorer et devenir une icone en cyber sécurité.</p>
+      <p data-i18n="apropos.p3">Je reçois une formation de qualité et n'hésite pas à parfaire mes acquis en pratiquant. Vous verrez ici mes projets et sachez que ce Portfolio en est un également.</p>
+    </div>
+    <ul class="facts">
+      <li><b data-i18n="apropos.f1t">Je suis</b><span data-i18n="apropos.f1d">Passionnée par le numériques, les sciences, la cybersécurité et la technologie. Je conçois des sites web et pose les bases de leur sécurité.</span></li>
+      <li><b data-i18n="apropos.f2t">Je cherche</b><span data-i18n="apropos.f2d">Des opportunités d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.</span></li>
+    </ul>
+  </div>
+</section>
 
-themeButton.addEventListener('click', () => {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const current = html.getAttribute('data-theme') || (isDark ? 'dark' : 'light');
-  const next = current === 'dark' ? 'light' : 'dark';
+<section id="competences">
+  <h2 data-i18n="comp.titre">Mes compétences</h2>
+  <div class="skills">
+    <div class="skill">
+      <h3 data-i18n="comp.s1t">Programmation</h3>
+      <p data-i18n="comp.s1d">Les bases de la programation</p>
+      <div class="tags"><span>Python</span><span class="learn">C/C++</span><span data-i18n="comp.algo">Algorithmique</span></div>
+    </div>
+    <div class="skill">
+      <h3 data-i18n="comp.s2t">Web</h3>
+      <p data-i18n="comp.s2d">Créer des pages claires et adaptées aux mobiles.</p>
+      <div class="tags"><span>HTML</span><span>CSS</span><span>PHP</span><span class="learn">JavaScript</span></div>
+    </div>
+    <div class="skill">
+      <h3 data-i18n="comp.s3t">Outils</h3>
+      <p data-i18n="comp.s3d">Pour travailler proprement et à plusieurs.</p>
+      <div class="tags"><span>Git</span><span>GitHub</span><span>VS Code</span><span class="learn">Linux</span></div>
+    </div>
+    <div class="skill">
+      <h3 data-i18n="comp.s4t">Conception</h3>
+      <p data-i18n="comp.s4d">Pour apprendre à modéliser et à concevoir des sytèmes d'informations et des bases de données</p>
+      <div class="tags"><span>Mérise</span><span>SQL</span><span class="learn">MySQL</span></div>
+    </div>
+    <div class="skill">
+      <h3 data-i18n="comp.s5t">Savoir-être</h3>
+      <p data-i18n="comp.s5d">Ce qui fait avancer un projet.</p>
+      <div class="tags"><span data-i18n="comp.rigueur">Rigueur</span><span data-i18n="comp.curiosite">Curiosité</span><span data-i18n="comp.equipe">Travail d'équipe</span><span data-i18n="comp.critique">Esprit critique</span></div>
+    </div>
+  </div>
+  <p class="legend" data-i18n="comp.legende">Bordure pleine : acquis en cours. Bordure en pointillés : en cours d'apprentissage.</p>
+</section>
 
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  updateThemeIcon();
-});
+<section id="projets">
+  <h2 data-i18n="projets.titre">Mes projets</h2>
+  <div class="projects">
+    <article class="project">
+      <div>
+        <h3 data-i18n="projets.p1t">Mon premier projet en groupe</h3>
+        <span class="status" data-i18n="projets.encours">En cours</span>
+      </div>
+      <div>
+        <p data-i18n="projets.p1d">Reéalisation d'un site web de A à Z pour l'implémentation d'une plateforme numérique dans les hopitaux pour un suivi médical optimal des patients. Je suis principalement chargée de la sécurité du site.</p>
+        <div class="tags"><span>Python</span><span data-i18n="projets.fonctions">Fonctions</span><span data-i18n="projets.tests">Tests</span></div>
+      </div>
+    </article>
+    <article class="project">
+      <div>
+        <h3 data-i18n="projets.p2t">Mon premier site web</h3>
+        <span class="status" data-i18n="projets.encours">En cours</span>
+      </div>
+      <div>
+        <p data-i18n="projets.p2d">Un site web entièrement pensé pour la prise de rendez-vous dans un salon de coiffure avec apperçu sur les prestations déjà réalisées.</p>
+        <div class="tags"><span>HTML</span><span>CSS</span><span data-i18n="projets.responsive">Responsive</span><span>PHP</span><span>MySQL</span></div>
+      </div>
+    </article>
+    <article class="project">
+      <div>
+        <h3 data-i18n="projets.p3t">Application de gestion de stock</h3>
+        <span class="status" data-i18n="projets.termine">Terminé</span>
+      </div>
+      <div>
+        <p data-i18n="projets.p3d">Une application de gestion de stock pratique pour les entrepots et les boutiques grossistes pensées pour permettre au fournisseur de mieux gérer ses produits, leur nombre et leur prix.</p>
+        <div class="tags"><span>Python</span><span>MySQL</span></div>
+      </div>
+    </article>
+  </div>
+</section>
 
-function updateThemeIcon() {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const current = html.getAttribute('data-theme') || (isDark ? 'dark' : 'light');
-  themeIcon.textContent = current === 'dark' ? '☀️' : '🌙';
-}
+<section id="parcours">
+  <h2 data-i18n="parcours.titre">Mon parcours</h2>
+  <ul class="timeline">
+    <li><b data-i18n="parcours.e1t">Deuxième année d'informatique</b><span data-i18n="parcours.e1d">Ascenscia Keyce · en cours</span></li>
+    <li><b data-i18n="parcours.e2t">Première année d'informatique</b><span>Ascenscia Keyce</span></li>
+    <li><b data-i18n="parcours.e3t">Baccalauréat</b><span>Canadian International School of Lomé · 2024-2025</span></li>
+  </ul>
+</section>
 
+<section id="contact" class="contact">
+  <h2 data-i18n="contact.titre">Mes contacts</h2>
+  <p data-i18n="contact.texte">Un stage, un projet ou une question ? Écrivez-moi, je vous répondrai volontiers.</p>
+  <div class="links">
+    <a href="mailto:"><small data-i18n="contact.email">E-mail</small><b>gabaines7@gmail.com</b></a>
+    <a href="https://github.com/mariaines-ux?tab=projects" target="_blank"><small>GitHub</small><b>mariaines-ux</b></a>
+    <a href="https://www.linkedin.com/in/maria-in%C3%A8s-gaba-815b2b392" target="_blank"><small>LinkedIn</small><b>Maria-Inès GABA</b></a>
+  </div>
+</section>
 
-/* ------------------------------------------------------------
-   2. LANGUE FRANÇAIS / ANGLAIS
-   Chaque élément traduisible porte un attribut data-i18n="clé"
-   dans mon_portfolio.html. Ce dictionnaire fournit la version
-   française et anglaise pour chaque clé.
-   ------------------------------------------------------------ */
-const translations = {
-  fr: {
-    'nav.apropos': 'À propos de moi',
-    'nav.competences': 'Mes compétences',
-    'nav.projets': 'Mes projets',
-    'nav.parcours': 'Mon parcours',
-    'nav.contact': 'Me contacter',
-
-    'hero.lead': 'Étudiante en informatique',
-    'hero.btn1': 'Voir mes projets',
-    'hero.btn2': 'Me contacter',
-
-    'apropos.titre': 'À propos de moi',
-    'apropos.p1': "Durant mon parcours scolaire, en tant que lycéenne, j'ai eu l'opportunité d'apprendre les bases de la programmation en Python. Apprendre cela, m'a fasciné et de là, j'ai entamé des recherches sur l'informatique. Très vite, ce que je pensais n'etre qu'une discipline parmis tant d'autres est devenue une passion que je nourris encore aujourd'hui.",
-    'apropos.p2': "Mon objectif est clair. M'améliorer et devenir une icone en cyber sécurité.",
-    'apropos.p3': 'Je reçois une formation de qualité et n\u2019hésite pas à parfaire mes acquis en pratiquant. Vous verrez ici mes projets et sachez que ce Portfolio en est un également.',
-    'apropos.f1t': 'Je suis',
-    'apropos.f1d': 'Passionnée par le numériques, les sciences, la cybersécurité et la technologie. Je conçois des sites web et pose les bases de leur sécurité.',
-    'apropos.f2t': 'Je cherche',
-    'apropos.f2d': "Des opportunités d'apprendre et de progresser à travers un projet, des travaux de groupe, un stage ou meme des ateliers immersifs.",
-
-    'comp.titre': 'Mes compétences',
-    'comp.s1t': 'Programmation',
-    'comp.s1d': 'Les bases de la programation',
-    'comp.algo': 'Algorithmique',
-    'comp.s2t': 'Web',
-    'comp.s2d': 'Créer des pages claires et adaptées aux mobiles.',
-    'comp.s3t': 'Outils',
-    'comp.s3d': 'Pour travailler proprement et à plusieurs.',
-    'comp.s4t': 'Conception',
-    'comp.s4d': "Pour apprendre à modéliser et à concevoir des sytèmes d'informations et des bases de données",
-    'comp.s5t': 'Savoir-être',
-    'comp.s5d': 'Ce qui fait avancer un projet.',
-    'comp.rigueur': 'Rigueur',
-    'comp.curiosite': 'Curiosité',
-    'comp.equipe': "Travail d'équipe",
-    'comp.critique': 'Esprit critique',
-    'comp.legende': 'Bordure pleine : acquis en cours. Bordure en pointillés : en cours d\u2019apprentissage.',
-
-    'projets.titre': 'Mes projets',
-    'projets.termine': 'Terminé',
-    'projets.encours': 'En cours',
-    'projets.p1t': 'Mon premier projet en groupe',
-    'projets.p1d': "Reéalisation d'un site web de A à Z pour l'implémentation d'une plateforme numérique dans les hopitaux pour un suivi médical optimal des patients. Je suis principalement chargée de la sécurité du site.",
-    'projets.fonctions': 'Fonctions',
-    'projets.tests': 'Tests',
-    'projets.p2t': 'Mon premier site web',
-    'projets.p2d': "Un site web entièrement pensé pour la prise de rendez-vous dans un salon de coiffure avec apperçu sur les prestations déjà réalisées.",
-    'projets.responsive': 'Responsive',
-    'projets.p3t': 'Application de gestion de stock',
-    'projets.p3d': "Une application de gestion de stock pratique pour les entrepots et les boutiques grossistes pensées pour permettre au fournisseur de mieux gérer ses produits, leur nombre et leur prix.",
-
-    'parcours.titre': 'Mon parcours',
-    'parcours.e1t': "Deuxième année d'informatique",
-    'parcours.e1d': 'Ascenscia Keyce · en cours',
-    'parcours.e2t': "Première année d'informatique",
-    'parcours.e3t': 'Baccalauréat',
-
-    'contact.titre': 'Mes contacts',
-    'contact.texte': 'Un stage, un projet ou une question ? Écrivez-moi, je vous répondrai volontiers.',
-    'contact.email': 'E-mail',
-
-    'footer.texte': '© 2026 Maria-Inès Ayélé GABA · Étudiante en informatique',
-  },
-
-  en: {
-    'nav.apropos': 'About me',
-    'nav.competences': 'My skills',
-    'nav.projets': 'My projects',
-    'nav.parcours': 'My background',
-    'nav.contact': 'Contact me',
-
-    'hero.lead': 'Computer Science Student',
-    'hero.btn1': 'See my projects',
-    'hero.btn2': 'Contact me',
-
-    'apropos.titre': 'About me',
-    'apropos.p1': "During high school, I had the chance to learn the basics of programming in Python. Learning it fascinated me, and from there I started researching computer science further. What I first saw as just one subject among many quickly became a passion I still nurture today.",
-    'apropos.p2': 'My goal is clear: to keep improving and become a leading figure in cybersecurity.',
-    'apropos.p3': "I'm getting a quality education and I make sure to reinforce what I learn through practice. You'll find my projects here, and this portfolio itself is one of them.",
-    'apropos.f1t': "I'm",
-    'apropos.f1d': 'Passionate about digital technology, science, cybersecurity and tech in general. I design websites and lay the groundwork for their security.',
-    'apropos.f2t': 'Looking for',
-    'apropos.f2d': 'Opportunities to learn and grow through a project, group work, an internship, or even hands-on workshops.',
-
-    'comp.titre': 'My skills',
-    'comp.s1t': 'Programming',
-    'comp.s1d': 'The fundamentals of programming.',
-    'comp.algo': 'Algorithms',
-    'comp.s2t': 'Web',
-    'comp.s2d': 'Building clear, mobile-friendly pages.',
-    'comp.s3t': 'Tools',
-    'comp.s3d': 'For working cleanly, alone or with others.',
-    'comp.s4t': 'Design',
-    'comp.s4d': 'Learning to model and design information systems and databases.',
-    'comp.s5t': 'Soft skills',
-    'comp.s5d': 'What moves a project forward.',
-    'comp.rigueur': 'Rigor',
-    'comp.curiosite': 'Curiosity',
-    'comp.equipe': 'Teamwork',
-    'comp.critique': 'Critical thinking',
-    'comp.legende': 'Solid border: already acquired. Dashed border: currently learning.',
-
-    'projets.titre': 'My projects',
-    'projets.termine': 'Completed',
-    'projets.encours': 'In progress',
-    'projets.p1t': 'My first group project',
-    'projets.p1d': 'Building a website from scratch to roll out a digital platform for hospitals, for better patient follow-up. I mainly handle the site\u2019s security.',
-    'projets.fonctions': 'Functions',
-    'projets.tests': 'Tests',
-    'projets.p2t': 'My first website',
-    'projets.p2d': 'A website designed entirely for booking appointments at a hair salon, with a preview of past work.',
-    'projets.responsive': 'Responsive',
-    'projets.p3t': 'Inventory management app',
-    'projets.p3d': 'A practical inventory management app for warehouses and wholesale shops, built to help suppliers better manage their products, quantities and prices.',
-
-    'parcours.titre': 'My background',
-    'parcours.e1t': 'Second-year computer science',
-    'parcours.e1d': 'Ascenscia Keyce · ongoing',
-    'parcours.e2t': 'First-year computer science',
-    'parcours.e3t': 'High school diploma',
-
-    'contact.titre': 'My contacts',
-    'contact.texte': "An internship, a project, or just a question? Feel free to reach out, I'll gladly reply.",
-    'contact.email': 'Email',
-
-    'footer.texte': '© 2026 Maria-Inès Ayélé GABA · Computer Science Student',
-  },
-};
-
-const langButton = document.getElementById('lang-toggle');
-
-let currentLang = localStorage.getItem('lang') || 'fr';
-applyLanguage(currentLang);
-
-langButton.addEventListener('click', () => {
-  currentLang = currentLang === 'fr' ? 'en' : 'fr';
-  localStorage.setItem('lang', currentLang);
-  applyLanguage(currentLang);
-});
-
-function applyLanguage(lang) {
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const key = el.getAttribute('data-i18n');
-    const text = translations[lang][key];
-    if (text) {
-      el.textContent = text;
-    }
-  });
-
-  document.documentElement.setAttribute('lang', lang);
-  langButton.textContent = lang === 'fr' ? 'FR / EN' : 'EN / FR';
-}
-
-
-/* ------------------------------------------------------------
-   3. APPARITION AU DÉFILEMENT (scroll reveal)
-   Principe : on observe certains éléments de la page grâce à
-   IntersectionObserver, une API du navigateur qui détecte quand
-   un élément entre dans la zone visible de l'écran. Dès que
-   c'est le cas, on lui ajoute la classe "is-visible", qui
-   déclenche l'animation d'apparition définie en CSS ci-dessous.
-   ------------------------------------------------------------ */
-
-// On injecte le CSS nécessaire directement ici, pour ne pas avoir
-// à modifier mon_portfolio.css. Tu peux bien sûr déplacer ces
-// règles dans ton fichier CSS si tu préfères tout centraliser.
-const revealStyle = document.createElement('style');
-revealStyle.textContent = `
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* Si la personne a activé "réduire les animations" dans son système,
-     on affiche directement le contenu, sans effet. */
-  @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-  }
-`;
-document.head.appendChild(revealStyle);
-
-// Éléments à faire apparaître progressivement : le titre de chaque
-// section, et à l'intérieur, les cartes (compétences, projets, étapes
-// du parcours, liens de contact).
-const revealSelectors = [
-  'section > h2',
-  '.about > div',
-  '.facts li',
-  '.skill',
-  '.project',
-  '.timeline li',
-  '.links a',
-];
-
-const revealElements = document.querySelectorAll(revealSelectors.join(', '));
-
-revealElements.forEach((el, index) => {
-  el.classList.add('reveal');
-  // Petit décalage progressif entre éléments voisins (0, 90, 180, 270ms puis
-  // on recommence à 0), pour un effet "cascade" plutôt qu'un bloc figé.
-  el.style.transitionDelay = `${(index % 4) * 90}ms`;
-});
-
-// L'observateur : callback appelé chaque fois qu'un élément observé
-// entre ou sort de la zone définie par "rootMargin".
-const revealObserver = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        // Une fois apparu, on arrête de l'observer : l'animation
-        // ne se rejoue pas si on remonte puis redescend sur l'élément.
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  {
-    threshold: 0.15,                  // se déclenche dès que 15% de l'élément est visible
-    rootMargin: '0px 0px -60px 0px',  // déclenche un peu avant d'atteindre le bas de l'écran
-  }
-);
-
-revealElements.forEach((el) => revealObserver.observe(el));
+<footer data-i18n="footer.texte">© 2026 Maria-Inès Ayélé GABA · Computer Science Student</footer>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
